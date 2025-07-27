@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="blog-posts-section">
+    {% for post in posts %}
+    <article class="post-card">
+        <h2 class="post-title">
+            {% comment %} <a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date|date:'%m' post.publish_date|date:'%d' post.slug %}" class="read-more-btn">Read More</a> {% endcomment %}
+        </h2>
+        <div class="post-meta">
+            <span class="post-author">By <a href="#" class="author-link">{{ post.author }}</a></span>
+            <span class="separator">|</span>
+            <time class="post-date" datetime="{{ post.publish_date|date:'Y-m-d' }}">{{ post.publish_date|date:"F d, Y" }}</time>
+            <span class="separator">|</span>
+            <span class="post-category">Category: {{ post.category }}</span>
+        </div>
+        
+        {% if post.thumbnail %}
+            <div class="post-thumbnail-container">
+                <a href="{{ post.get_absolute_url }}"><img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="post-thumbnail"></a>
+            </div>
+        {% endif %}
+        
+        <p class="post-summary">{{ post.summary }}</p>
+        
+        <div class="post-actions">
+            <a href="{{ post.get_absolute_url }}" class="read-more-btn">Read More</a>
+            {% comment %} <a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}" class="read-more-btn">Read More</a> {% endcomment %}
+        </div>
+    </article>
+    {% empty %}
+    <p class="no-posts-message">No blog posts published yet.</p>
+    {% endfor %}
+</section>
+{% endblock content %}

@@ -1,0 +1,145 @@
+.post-detail-container {
+    max-width: 800px; /* Max width for readability */
+    margin: 40px auto; /* Center the container with margin from top/bottom */
+    padding: 30px;
+    background-color: #ffffff; /* White background for the post card */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 10px; /* Rounded corners */
+    line-height: 1.7; /* Good line height for readability */
+}
+
+.post-detail-title {
+    font-size: 2.8em; /* Larger title */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px;
+    text-align: center; /* Center the title */
+    line-height: 1.2;
+}
+
+.post-detail-meta {
+    text-align: center;
+    color: #777; /* Lighter color for meta info */
+    font-size: 0.9em;
+    margin-bottom: 30px;
+    padding-bottom: 15px; /* Space before content/thumbnail */
+    border-bottom: 1px solid #eee; /* Subtle separator line */
+}
+
+.post-detail-meta .separator {
+    margin: 0 10px;
+    color: #ccc; /* Lighter color for separators */
+}
+
+.post-detail-author,
+.post-detail-category,
+.post-detail-date {
+    /* Basic styling for meta spans */
+    font-weight: 500;
+}
+
+/* Style links within meta */
+.post-detail-author a {
+    color: var(--primary-color, #007bff); /* Use your theme's primary color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.post-detail-author a:hover {
+    color: var(--dark-primary-color, #0056b3);
+}
+
+.post-detail-thumbnail {
+    margin: 30px 0;
+    text-align: center; /* Center the image */
+}
+
+.post-thumbnail-img {
+    max-width: 100%; /* Ensure image fits container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-detail-content {
+    font-size: 1.1em;
+    color: #444;
+    margin-top: 30px;
+}
+
+/* Styling for content within post-detail-content, assuming it's rich text */
+.post-detail-content p {
+    margin-bottom: 1em;
+}
+
+.post-detail-content h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    border-bottom: 1px dotted #eee; /* Subtle line below sub-headings */
+    padding-bottom: 5px;
+}
+
+.post-detail-content h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+}
+
+.post-detail-content ul,
+.post-detail-content ol {
+    margin-left: 25px;
+    margin-bottom: 1em;
+}
+
+.post-detail-content a {
+    color: var(--primary-color, #007bff);
+    text-decoration: underline;
+}
+
+.post-detail-content pre {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-left: 3px solid var(--primary-color, #007bff);
+    padding: 15px;
+    margin: 20px 0;
+    overflow-x: auto;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.post-detail-content blockquote {
+    border-left: 4px solid var(--primary-color, #007bff);
+    padding: 10px 20px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+    color: #555;
+    font-style: italic;
+    border-radius: 5px;
+}
+
+.post-detail-actions {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #eee; /* Separator before actions */
+}
+
+.back-to-blog-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--primary-color, #007bff);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-to-blog-btn:hover {
+    background-color: var(--dark-primary-color, #0056b3);
+    transform: translateY(-2px); /* Slight lift on hover */
+}

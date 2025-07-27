@@ -1,0 +1,195 @@
+/* --- Variables for consistent styling (assuming you have some in base.css already) --- */
+:root {
+    --primary-color: #3498db; /* Example: Blue */
+    --secondary-color: #2ecc71; /* Example: Green */
+    --text-color: #333;
+    --light-text-color: #777;
+    --card-background: #ffffff;
+    --border-color: #e0e0e0;
+    --font-primary: 'Roboto', sans-serif; /* Example: Modern sans-serif */
+    --font-secondary: 'Playfair Display', serif; /* Example: Serif for headings */
+}
+
+/* --- Blog Posts Section Styling --- */
+.blog-posts-section {
+    display: grid;
+    /* This creates a responsive grid: 
+       - auto-fit: fill available space with as many columns as possible.
+       - minmax(300px, 1fr): columns will be at least 300px wide,
+                             or take up an equal share of remaining space. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px; /* Space between grid items */
+    padding: 20px; /* Padding around the grid section */
+    /* Ensure it doesn't push against the container edges */
+    box-sizing: border-box; 
+}
+
+/* --- Individual Post Card Styling --- */
+.post-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    display: flex; /* Use flexbox for internal layout of card elements */
+    flex-direction: column; /* Stack elements vertically */
+    overflow: hidden; /* Ensures rounded corners clip content */
+}
+
+.post-card:hover {
+    transform: translateY(-5px); /* Lift card slightly on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* Emphasize shadow on hover */
+}
+
+/* --- Post Title Styling --- */
+.post-title {
+    font-family: var(--font-secondary);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.post-title a {
+    color: var(--text-color); /* Dark text for title */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.post-title a:hover {
+    color: var(--primary-color); /* Change color on hover */
+}
+
+/* --- Post Meta Information (Author, Date) --- */
+.post-meta {
+    font-size: 0.9em;
+    color: var(--light-text-color);
+    margin-bottom: 15px;
+    display: flex; /* Arrange author and date side-by-side */
+    align-items: center;
+}
+
+.post-meta .separator {
+    margin: 0 8px;
+    color: var(--border-color);
+}
+
+.post-author a {
+    font-weight: bold;
+    color: var(--primary-color); /* Make author link distinct */
+    text-decoration: none;
+}
+
+.post-author a:hover {
+    text-decoration: underline;
+}
+
+.post-date {
+    /* No specific styles beyond parent .post-meta */
+}
+
+/* --- Post Thumbnail Styling --- */
+.post-thumbnail-container {
+    margin-bottom: 15px;
+    border-radius: 6px; /* Slightly rounded corners for the image container */
+    overflow: hidden; /* Ensures image respects rounded corners */
+    height: 200px; /* Fixed height for consistent card appearance */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Placeholder background if image is missing/loading */
+}
+
+.post-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    display: block; /* Remove extra space below image */
+}
+
+/* --- Post Summary Styling --- */
+.post-summary {
+    font-family: var(--font-primary);
+    font-size: 1em;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allows the summary to expand and push actions to the bottom */
+}
+
+/* --- Post Actions (e.g., Read More Button) --- */
+.post-actions {
+    margin-top: auto; /* Pushes the actions to the bottom of the flex container */
+    text-align: right; /* Align button to the right */
+}
+
+.read-more-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.read-more-btn:hover {
+    background-color: var(--secondary-color); /* Change color on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* --- Message for No Posts --- */
+.no-posts-message {
+    grid-column: 1 / -1; /* Make it span all columns in the grid */
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--light-text-color);
+    padding: 50px 0;
+}
+
+/* --- Responsive Adjustments for Post Grid --- */
+@media (max-width: 768px) {
+    .blog-posts-section {
+        grid-template-columns: 1fr; /* Stack posts vertically on smaller screens */
+        padding: 15px;
+    }
+
+    .post-card {
+        padding: 20px;
+    }
+
+    .post-title {
+        font-size: 1.6em;
+    }
+}
+
+.post-meta .post-category {
+    font-weight: 600; /* Make it slightly bolder */
+    color: var(--primary-color); /* Use your primary color for emphasis */
+    /* If it becomes a link to a category page later, you can add text-decoration: none; etc. */
+}
+
+@media (max-width: 480px) {
+    .blog-posts-section {
+        padding: 10px;
+    }
+
+    .post-card {
+        padding: 15px;
+    }
+
+    .post-title {
+        font-size: 1.4em;
+    }
+
+    .post-thumbnail-container {
+        height: 120px; /* Make thumbnails a bit smaller on very small screens */
+    }
+
+    .read-more-btn {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+}

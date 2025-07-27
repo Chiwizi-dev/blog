@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+       
+    <h1>Logout Page</h1>
+    <hr>
+
+    <h3>Are you sure you want to logout?</h3>
+
+
+    <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <a href="#" onclick="history.back(); return false;" class="confirm-logout-btn-return">Go Back</a> |
+        <input type="submit" value="Logout" class="confirm-logout-btn">
+    </form>
+
+{% else %}
+<h3>click on <a href="{% url 'home' %}">Home</a> to find out</h3>
+{% endif %}
+
+{% endblock content %}

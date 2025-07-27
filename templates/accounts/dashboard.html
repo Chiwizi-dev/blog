@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="user-profile-card">
+    <div class="profile-header">
+        <img src="{{ userprofile.profile_picture.url }}" alt="{{ userprofile.user.user_name }}'s Profile Picture" class="profile-picture">
+        <h2 class="profile-username">{{ user.user_name | title }}</h2>
+        <p class="profile-about">{{ user.about }}</p>
+    </div>
+
+    <div class="profile-details">
+        <h3>Contact Information</h3>
+        <p><strong>Email:</strong> <span class="profile-email">{{ user.email }}</span></p>
+
+        <h3>Personal Information</h3>
+        <p><strong>Full Name:</strong> <span class="profile-full-name">{{ user.first_name }} {{ user.last_name }}</span></p>
+        <p><strong>Date of Birth:</strong> <span class="profile-dob">{{ userprofile.date_of_birth|date:"d F, Y" }}</span></p>
+        <p><strong>Address:</strong> <span class="profile-address">{{ userprofile.address }}</span></p>
+</div>
+
+    <div class="profile-actions">
+        <a href="" class="edit-profile-btn">Edit Profile</a>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="post-detail-container">
+    <article>
+        <h1 class="post-detail-title">{{ post.title }}</h1>
+
+        <div class="post-detail-meta">
+            <span class="post-detail-author">By {{ post.author }}</span>
+            <span class="separator">|</span>
+            <span class="post-detail-category">Category: {{ post.category }}</span>
+            <span class="separator">|</span>
+            {% comment %} Ensure publish_date is formatted nicely for humans and machines {% endcomment %}
+            <time class="post-detail-date" datetime="{{ post.publish_date|date:'Y-m-d' }}">{{ post.publish_date|date:"F d, Y" }}</time>
+        </div>
+
+        {% if post.thumbnail %}
+            <div class="post-detail-thumbnail">
+                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="post-thumbnail-img">
+            </div>
+        {% endif %}
+
+        <div class="post-detail-content">
+            {{ post.content|safe }} 
+        </div>
+
+        <div class="post-detail-actions">
+            <a href="{% url 'blog:home' %}" class="back-to-blog-btn">Back to Blog</a>
+        </div>
+    </article>
+</main>
+{% endblock content %}

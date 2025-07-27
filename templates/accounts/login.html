@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<h1>Welcome to the Blog's Login page</h1>
+
+{% include "includes/messages.html" %}
+
+<form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+
+    <div>
+        <label for="email">Enter your email</label>
+        <input type="text" name="email" id="email" enter your email required>
+    </div>
+    <div>
+        <label for="password">Enter your email</label>
+        <input type="password" name="password" id="password" enter your password required>
+    </div>
+    <br>
+    <input type="submit" value="Login">
+</form>
+
+{% endblock content %}

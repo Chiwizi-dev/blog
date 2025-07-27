@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/detail_page.css' %}">
+</head>
+<body>
+    <header class="page-header">
+        <a href="{% url 'blog:home' %}" class="logo"><img src="{% static 'Images/logo.png' %}" alt="Logo" style="width: 70px; height: 40px;"></a>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{% url 'blog:home' %}">Home</a></li>
+                <li><a href="{% url 'blog:about_page' %}">About</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <ul>
+                <li>
+                     {% if user.is_authenticated %}
+                        <span>Welcome, <strong>{{ user.user_name |capfirst }}</strong></span>
+                    {% else %}
+                        <span>Welcome, User</span>
+                    {% endif %}
+                </li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <small><a href="{% url 'accounts:confirm_logout' %}" style="color:#acabab;">Logout</a></small>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}">Login</a> | <a href="{% url 'accounts:register' %}">Sign Up</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <aside class="left-sidebar">
+        <h3>Navigation Links</h3>
+        <ul>
+            <li><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Users Management</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+        <br>
+        <h3>Quick Links</h3>
+        <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Documentation</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+       {% block content %}
+       {% endblock content %}
+    </main>
+
+    <aside class="right-aside">
+        <h3>Quick Stats</h3>
+        <p><strong>Total Posts:</strong> {{ posts_count }}</p>
+        {% if user.is_authenticated %}
+            <p><strong>Your Posts:</strong> {{ user.post_count }}</p>
+        {% endif %}
+        <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
+        
+        <h3>Notifications</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;">New message from Admin.</li>
+            <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
+        </ul>
+
+        {% if user.is_authenticated %}
+            <h3>My Recent Posts</h3>
+            <ul style="list-style: none; padding: 0;">
+                {% with recent_posts=user.blog_posts.all|slice:":3" %}
+                    {% for user_post in recent_posts %}
+                        <li>
+                            <h4><span style="color: #2ecc71;">&#10148;</span> {{ user_post.title }}</h4>
+                        </li>
+                    {% empty %}
+                        <li><h4 style="color: #777;">You haven't made any post.</h4></li>
+                    {% endfor %}
+                {% endwith %}
+            </ul>
+            {% else %}
+                <div style="margin-bottom: 20px;">
+                <a href="#"><img src="../../static/Images/blog-advert.jpg" alt="advert" width="170px"></a></div>
+                <div><a href="#"><img src="../../static/Images/blog-advert2.jpg" alt="advert" width="170px"></a></div>
+                
+        {% endif %}
+       
+    </aside>
+
+    <footer class="footer">
+        <p>&copy; <span id="current-year"></span> Test Blog. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+        // JavaScript to automatically update the copyright year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>

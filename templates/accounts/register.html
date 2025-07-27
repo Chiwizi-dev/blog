@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1 style="text-align: center;">Welcome to the Blog's registration page</h1>
+    <hr> <br>
+
+   <div class="form-container">
+        <form method="post" class="form">
+            {% include "includes/messages.html" %}
+
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                    <div class="form-fields">
+                        <table>
+                            <tbody>
+                                {% for field in form %}
+                                    <tr>
+                                        <th>{{ field.label_tag }}</th>
+                                        <td>{{ field }}</td>
+                                        {{ field.errors }}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                <br>
+            <button type="submit" class="register-btn">Submit</button>
+        </form>
+   </div>
+
+{% endblock content %}

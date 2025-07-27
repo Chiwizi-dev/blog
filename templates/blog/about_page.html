@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="about-container">
+        <div class="about-item about-title">
+             <h1 style="text-shadow: 2px 2px gray;">{{ about.title }}</h1>
+             <p>{{ about.content }}</p>
+        </div>
+        <div class="about-item" style="position: relative; top: 70px; right: 30px;">
+            <img class="about-image-obj" src="{{ about.profile_picture.url }}" alt="About Image" style="border-radius: 40%; width: 180px; height: 200px;">
+        </div>
+    </div>
+    <div>
+        {% if about.social_media_links %}
+            {% for platform, link in about.social_media_links.items %}
+                <p style="padding-bottom: 0%; margin-bottom: 0;">{{platform | title }}: <a href="{{ link }}">{{ platform|title }}</a></p>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}

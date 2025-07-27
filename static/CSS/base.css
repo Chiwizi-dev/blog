@@ -1,0 +1,470 @@
+/* --- Global Resets & Body Setup --- */
+body {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "left-sidebar main-content right-aside"
+        "footer footer footer";
+    grid-template-columns: 250px 1fr 200px; /* Left Sidebar: Main Content : Right Aside */
+    grid-template-rows: auto 1fr auto; /* Header : Main Content Row : Footer */
+    min-height: 110vh;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* --- Common Styling for All Grid Areas --- */
+header, aside, main, footer {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* --- 1. Navbar / Header (Top Row) --- */
+.page-header {
+    grid-area: header; 
+    background-color: #333;
+    color: #fff;
+    display: flex; 
+    align-items: center;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* --- Logo (1 part of the 1:7 ratio in header) --- */
+.page-header .logo {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 50px;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #90EE90;
+    text-decoration: none;
+}
+
+/* Styling for the image within the logo link */
+.page-header .logo img {
+    width: 70px; 
+    height: 40px;
+    object-fit: contain;
+    display: block; 
+}
+
+.navbar {
+    flex: 7;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+}
+
+/* Styling for individual ul lists within nav */
+.page-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+/* Styling for individual links */
+.page-header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.page-header nav ul li a:hover {
+    color: #90EE90;
+}
+
+/* --- 2a. Left Sidebar --- */
+.left-sidebar {
+    grid-area: left-sidebar;
+    background-color: #F8F8F8;
+    
+    border-right: 1px solid #c0e0c0;
+    border-left: 1px solid #c0e0c0;
+    overflow-y: auto;
+}
+.left-sidebar h3 {
+    color: #2e8b57;
+    margin-top: 0;
+}
+.left-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.left-sidebar ul li {
+    margin-bottom: 8px;
+}
+.left-sidebar ul li a {
+    color: #444;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+}
+.left-sidebar ul li a:hover {
+    color: #2e8b57;
+    text-decoration: underline;
+}
+
+/* --- 2b. Main Content Area --- */
+.main-content {
+    grid-area: main-content;
+    background-color: #ffffff;
+    line-height: 1.6;
+    overflow-y: auto;
+}
+.main-content h1, .main-content h2 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+/* --- 2c. Right Aside / Sidebar --- */
+.right-aside {
+    grid-area: right-aside;
+    background-color: #F8F8F8;
+    border-left: 1px solid #c0e0c0;
+    overflow-y: auto;
+}
+.right-aside h3 {
+    color: #2e8b57;
+    margin-top: 0;
+}
+
+/* --- 3. Footer (Bottom Row) --- */
+.footer {
+    grid-area: footer;
+    background-color: #333;
+    color: #bbb;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 1px solid #555;
+}
+.footer p {
+    margin: 5px 0;
+}
+.footer a {
+    color: #90EE90;
+    text-decoration: none;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* REGISTERATION FORM FIELDS */
+.form-fields {
+    width: 100%; 
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    background-color: #fff; 
+    color: #333; /* Dark text color for input */
+    font-family: Arial, sans-serif; 
+    font-size: 16px;
+    line-height: 1.5; 
+    box-sizing: border-box; /* Ensures padding and border are included in the 'width: 100%' calculation */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; 
+}
+
+/* --- Specific Adjustments for Textareas with 'form-fields' class --- */
+textarea.form-fields {
+    resize: vertical; 
+    min-height: 100px; 
+}
+
+/* --- Focus State for 'form-fields' --- */
+.form-fields:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none; 
+    background-color: #f7fcff;
+}
+.form-fields::placeholder {
+    color: #999; 
+    opacity: 1; 
+}
+
+/* For older browser compatibility with placeholders */
+.form-fields::-webkit-input-placeholder {
+    color: #999;
+}
+.form-fields:-moz-placeholder {
+    color: #999;
+}
+.form-fields::-moz-placeholder {
+    color: #999;
+}
+.form-fields:-ms-input-placeholder {
+    color: #999;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.register-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+
+
+
+/* ABOUT PAGE */
+.about-container {
+    margin-top: 40px;
+    display: flex;
+    gap: 80px;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.about-item {
+    text-align: center;
+    display: inline-block;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    body {
+        grid-template-areas:
+            "header"
+            "left-sidebar"
+            "main-content"
+            "right-aside"
+            "footer";
+        grid-template-columns: 1fr; 
+        grid-template-rows: auto auto 1fr auto auto; /* Header, left, main, right, footer */
+    }
+    .page-header {
+        flex-direction: column; /* Stack logo and nav vertically */
+        align-items: flex-start; /* Align everything to the left */
+        padding: 10px 15px;
+    }
+    .page-header .logo {
+        flex: none; /* Remove flex-grow on small screens to let it take natural width */
+        margin-bottom: 10px; /* Add space below logo */
+    }
+    .navbar { /* Target the <nav class="navbar"> */
+        flex: none; /* Remove flex-grow on small screens */
+        flex-direction: column; /* Stack the two <ul>s vertically */
+        align-items: flex-start; /* Align nav items to the left */
+        width: 100%; /* Make nav take full width */
+        gap: 0; /* Remove gap between stacked <ul>s */
+    }
+    .page-header nav ul { /* Also target specific <ul>s inside the nav for stacking */
+        flex-direction: column; /* Stack list items vertically */
+        width: 100%;
+        gap: 0; /* Remove gap between stacked list items */
+        border-top: 1px solid rgba(255,255,255,0.1); /* Separator for clarity */
+        padding-top: 5px;
+        margin-top: 5px;
+    }
+    .page-header nav ul:first-child {
+        border-top: none; /* No top border for the very first ul */
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .page-header nav ul li {
+        width: 100%;
+    }
+    .page-header nav ul li a {
+        padding: 10px 0;
+        display: block;
+    }
+    .left-sidebar, .right-aside {
+        width: auto;
+        border-right: none; /* Remove vertical borders when stacked */
+        border-left: none;
+        border-bottom: 1px solid #c0e0c0; /* Add bottom border for separation */
+    }
+    .main-content {
+        border-bottom: 1px solid #c0e0c0; /* Add bottom border below main content too */
+    }
+}
+
+
+
+/* DASHBOARD */
+.user-profile-card {
+    max-width: 700px; /* Limit the width of the profile card */
+    margin: 30px auto; /* Center the card horizontally */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Profile Header Section --- */
+.profile-header {
+    text-align: center; /* Center align items in the header */
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee; /* Separator line */
+}
+
+.profile-picture {
+    width: 150px; 
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    border: 4px solid #90EE90; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Shadow for the picture */
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-username {
+    font-size: 2.2em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.profile-about {
+    font-size: 1.1em;
+    color: #666;
+    max-width: 80%; 
+    margin: 0 auto; 
+}
+
+/* --- Profile Details Section --- */
+.profile-details {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile-details h3 {
+    font-size: 1.5em;
+    color: #2e8b57; 
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0; 
+    padding-bottom: 5px;
+}
+
+.profile-details p {
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    color: #444;
+}
+
+.profile-details p strong {
+    color: #222;
+    margin-right: 5px;
+}
+
+/* --- Profile Actions (e.g., Edit Button) --- */
+.profile-actions {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.edit-profile-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007bff; 
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .user-profile-card {
+        margin: 20px; /* Less margin on smaller screens */
+        padding: 20px;
+    }
+    .profile-username {
+        font-size: 1.8em;
+    }
+    .profile-about {
+        font-size: 1em;
+        max-width: 100%;
+    }
+    .profile-details h3 {
+        font-size: 1.3em;
+    }
+    .edit-profile-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+}
+
+
+/* CONFIRM LOGOUT */
+
+.confirm-logout-btn-return,
+.confirm-logout-btn {
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 1em; 
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block; 
+    margin: 0 5px; 
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
+    vertical-align: middle; /* Align vertically with the | separator */
+}
+
+.confirm-logout-btn-return {
+    background-color: #f0f0f0; 
+    color: #555; 
+    border: 1px solid #ccc; 
+}
+
+.confirm-logout-btn-return:hover {
+    background-color: #e0e0e0;
+    color: #333;
+    border-color: #bbb;
+}
+
+.confirm-logout-btn {
+    background-color: #dc3545;
+    color: #fff; 
+    border: 1px solid #dc3545; 
+}
+
+.confirm-logout-btn:hover {
+    background-color: #c82333; 
+    border-color: #bd2130;
+}
+
