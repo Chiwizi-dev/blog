@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{% include "../includes/messages.html" %}
+
 <section class="blog-posts-section">
     {% for post in posts %}
     <article class="post-card">
         <h2 class="post-title">
-            {% comment %} <a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date|date:'%m' post.publish_date|date:'%d' post.slug %}" class="read-more-btn">Read More</a> {% endcomment %}
+            <a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}">
+                {{ post.title | capfirst }}
         </h2>
         <div class="post-meta">
-            <span class="post-author">By <a href="#" class="author-link">{{ post.author }}</a></span>
+            <span class="post-author">By <a href="#" class="author-link"> {{ post.author }}</a></span>
             <span class="separator">|</span>
             <time class="post-date" datetime="{{ post.publish_date|date:'Y-m-d' }}">{{ post.publish_date|date:"F d, Y" }}</time>
             <span class="separator">|</span>

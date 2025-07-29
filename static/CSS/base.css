@@ -468,3 +468,9 @@ textarea.form-fields {
     border-color: #bd2130;
 }
 
+/* DJANGO MESSAGES FRAMEWORK */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}

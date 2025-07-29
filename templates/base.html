@@ -9,6 +9,15 @@
      <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
      <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
      <link rel="stylesheet" href="{% static 'CSS/detail_page.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/login_page.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/register.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/change_password.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/password_reset_email_form.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/password_reset_form.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/users_posts.css' %}">
+
+     <script src="{% static 'JS/toggle_content.js' %}"></script>
+     
 </head>
 <body>
     <header class="page-header">
@@ -17,8 +26,9 @@
             <ul>
                 <li><a href="{% url 'blog:home' %}">Home</a></li>
                 <li><a href="{% url 'blog:about_page' %}">About</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#" id="toggleSectionButton" >Dashboard</a></li>
+                {% endif %}
             </ul>
             <ul>
                 <li>
@@ -40,19 +50,32 @@
     </header>
 
     <aside class="left-sidebar">
-        <h3>Navigation Links</h3>
+        <div id="collapsibleSection" style="display: none;">
+            <h3>Dashboard links</h3>
+            <ul id="dashboardLinks">
+                <li><a href="{% url 'accounts:my_profile' %}">My Profile</a></li>
+                <li><a href="{% url 'accounts:change_password' %}">Change Password</a></li>
+                <li><a href="#">View Profile</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </div>
+
+        <br>
+        <h3>Categories</h3>
+        <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:home' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">All</a></h4>
         <ul>
-            <li><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Users Management</a></li>
-            <li><a href="#">Settings</a></li>
+            {% for category in categories %}
+                <li>
+                    <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:categories' category.slug %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;display: inline;" >{{ category.name }}</a></h4>
+                </li>
+            {% endfor %}
         </ul>
+
         <br>
         <h3>Quick Links</h3>
         <ul>
-            <li><a href="#">Help Center</a></li>
-            <li><a href="#">Documentation</a></li>
+            <li><a href="#">settings</a></li>
+            <li><a href="#">T &amp; C</a></li>
         </ul>
     </aside>
 
@@ -65,8 +88,9 @@
         <h3>Quick Stats</h3>
         <p><strong>Total Posts:</strong> {{ posts_count }}</p>
         {% if user.is_authenticated %}
-            <p><strong>Your Posts:</strong> {{ user.post_count }}</p>
+            <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:user_posts' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;"><strong>Your Posts:</strong> {{ user.post_count }}</a></h4>
         {% endif %}
+
         <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
         
         <h3>Notifications</h3>
@@ -81,7 +105,7 @@
                 {% with recent_posts=user.blog_posts.all|slice:":3" %}
                     {% for user_post in recent_posts %}
                         <li>
-                            <h4><span style="color: #2ecc71;">&#10148;</span> {{ user_post.title }}</h4>
+                            <h4><span style="color: #2ecc71;">&#10148; </span><a href="{{ user_post.get_absolute_url}}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">{{ user_post.title }}</a></h4>
                         </li>
                     {% empty %}
                         <li><h4 style="color: #777;">You haven't made any post.</h4></li>

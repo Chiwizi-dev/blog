@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block content %}
+<main class="register-container">
+    <div class="register-form-wrapper">
+        <h1 class="register-title">Create Your Account</h1>
+
+        {% include "includes/messages.html" %}
+
+        <form action="{% url 'accounts:register' %}" method="POST" class="register-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} {# This renders the input tag #}
+                    {% if field.help_text %}
+                        <small class="form-help-text">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="form-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <p class="login-link">Already have an account? <a href="{% url 'accounts:login' %}">Log in here</a></p>
+    </div>
+</main>
+{% endblock content %}
+
+
+
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
     <h1 style="text-align: center;">Welcome to the Blog's registration page</h1>
@@ -28,6 +64,7 @@
                 <br>
             <button type="submit" class="register-btn">Submit</button>
         </form>
+        already have account? <a href="{% url 'accounts:login' %}">Login</a>
    </div>
 
-{% endblock content %}
+{% endblock content %} {% endcomment %}

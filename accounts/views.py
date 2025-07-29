@@ -5,10 +5,11 @@ from django.contrib import messages
 
 from .models import Account, UserProfile
 from .forms import RegistrationForm, UserProfileForm
+from django.contrib.auth.forms import SetPasswordForm 
 
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 
@@ -118,7 +119,7 @@ def logout_view(request):
 
 
 # @login_required(login_url="/login/")
-def dashboard(request):
+def my_profile(request):
     if not request.user.is_authenticated:
         return redirect("blog:home")
     user_obj = request.user
@@ -130,3 +131,101 @@ def dashboard(request):
 
     context = {"user_pk": user_pk, "userprofile":userprofile, "user_obj": user_obj}
     return render(request, "accounts/dashboard.html", context)
+
+
+
+def change_password(request):
+    if request.method == "POST":
+        current_password = request.POST.get("current_password", None)
+        new_password = request.POST.get("new_password", None)
+        confirm_new_password = request.POST.get("confirm_new_password", None)
+
+        user = Account.objects.get(user_name__exact=request.user.user_name)
+        if new_password == confirm_new_password:
+            success = user.check_password(current_password)
+            if success:
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Password changed successfully")
+                return redirect("accounts:dashboard")
+            else:
+                messages.error(request, "Invalid Password")
+                return render(request, "accounts/change_password.html")
+        else:
+            messages(request, "Passwords don't match!")
+            return render(request, "accounts/change_password.html")
+    return render(request, "accounts/change_password.html")
+
+
+
+def forget_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email", None)
+        if Account.objects.filter(email=email, is_active=True).exists():
+            user = get_object_or_404(Account, email__exact=email, is_active=True)
+
+            site_name = get_current_site(request)
+            to_email = user.email
+            email_subject = "Reset your password"
+            uid = urlsafe_base64_encode(force_bytes(user.id))
+            token = default_token_generator.make_token(user)
+
+            email_body = render_to_string("accounts/reset_email/password_reset_email.html", {
+                "domain": site_name,
+                "user": user,
+                "uidb64": uid,
+                "token": token
+            })
+            send_email = EmailMessage(
+                subject=email_subject,
+                body=email_body,
+                to=[to_email,]
+            )
+            send_email.send()
+
+            messages.success(request, "Password Reset Email was sent to the email you entered, please check your inbox to reset your password.")
+            return redirect("blog:home")
+        else:
+            messages.error(request, "it appears you entered and invalid / inactive email")
+            return redirect("blog:home")
+    else:
+        return render(request, "accounts/password_reset_email_form.html")
+    
+
+
+def password_reset_confirm(request, uidb64, token):
+    uid = None
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+    except (TypeError, ValueError, OverflowError):
+        pass
+
+    user = None
+    if uid is not None:
+        try:
+            user = get_object_or_404(Account, pk=uid)
+        except Exception:
+            pass
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your password has been set successfully. You may now log in with your new password.")
+                return redirect('accounts:login')
+            else:
+                messages.error(request, "Please correct the errors below.")
+        else:
+            form = SetPasswordForm(user)
+
+        return render(request, 'accounts/password_reset_form.html', {
+            'form': form, 
+            'uidb64': uidb64,
+            'token': token,
+            'page_title': 'Set New Password',
+        })
+    else:
+        messages.error(request, "The password reset link is invalid or has expired.")
+        return render(request, "accounts/reset_email/invalid_link.html")

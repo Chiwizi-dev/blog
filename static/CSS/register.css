@@ -1,0 +1,161 @@
+/* --- Register Page Styling (similar to Login page) --- */
+
+/* If you haven't already defined .login-container and .login-form-wrapper, etc., for the login page,
+   you might want to rename them to a more generic .auth-container, .auth-form-wrapper
+   or simply apply these styles if they are already present. */
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Adjust based on your header/footer */
+    padding: 20px;
+    background-color: #f0f2f5; /* Light background */
+}
+
+.register-form-wrapper {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 480px; /* Slightly wider if register has more fields */
+    width: 100%;
+    text-align: center;
+}
+
+.register-title {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Re-use form-group and form-control styles if they are global or from login page */
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+/* Apply to input fields within the form */
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+    width: calc(100% - 24px); /* Adjust for padding */
+    padding: 12px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form input[type="text"]:focus,
+.register-form input[type="email"]:focus,
+.register-form input[type="password"]:focus {
+    border-color: var(--primary-color, #007bff);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Style for form help text (optional, if you use field.help_text) */
+.form-help-text {
+    font-size: 0.85em;
+    color: #888;
+    margin-top: 5px;
+    display: block; /* Ensures it's on its own line */
+}
+
+/* Style for form errors (optional, if you display field.errors) */
+.form-error {
+    font-size: 0.85em;
+    color: #dc3545; /* Red for errors */
+    margin-top: 5px;
+}
+
+
+/* Button styling (re-use from login if applicable) */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color, #007bff);
+    color: #fff;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-primary-color, #0056b3);
+    transform: translateY(-2px);
+}
+
+/* --- NEW STYLE FOR "Already have an account?" link --- */
+.login-link { /* Using a new class name for clarity */
+    margin-top: 30px; /* Space above this link */
+    font-size: 0.95em;
+    color: #666; /* Grey text */
+}
+
+.login-link a {
+    color: var(--primary-color, #007bff); /* Your theme's primary color */
+    text-decoration: none; /* No underline by default */
+    font-weight: 600; /* Bolder link text */
+}
+
+.login-link a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* --- Styles for Django Messages (from includes/messages.html) --- */
+/* Ensure these are present in your main CSS file (base.css or style.css) */
+/* (Copy from previous login page styling if they aren't global yet) */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.messages li {
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-align: left;
+}
+
+.messages .success {
+    background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;
+}
+
+.messages .error {
+    background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+}
+
+.messages .info {
+    background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb;
+}
+
+.messages .warning {
+    background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba;
+}

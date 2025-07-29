@@ -7,19 +7,20 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-def home(request):
-    posts = Post.objects.published()
-    posts_count = posts.count()
+def home(request, category=None):
+    posts = None
+    if category is not None:
+        posts = Post.objects.filter(category__slug=category, status="published")
+    else:
+        posts = Post.objects.published()
+    
+    
+    # posts_count = posts.count()
 
-    context = {"posts": posts, "posts_count": posts_count}
+    # "posts_count": posts_count
+    context = {"posts": posts, "user_posts": user_posts}
     return render(request, "blog/home.html", context)
 
-
-def about_page(request):
-    about = get_object_or_404(AboutPage, id=1)
-    context = {"about": about}
-
-    return render(request, "blog/about_page.html", context)
 
 
 def post_detail(request, yr, mt, dt, slug):
@@ -34,3 +35,23 @@ def post_detail(request, yr, mt, dt, slug):
     context = {"post": object}
 
     return render(request, "blog/post_detail.html", context)
+
+
+
+def about_page(request):
+    about = get_object_or_404(AboutPage, id=1)
+    context = {"about": about}
+
+    return render(request, "blog/about_page.html", context)
+
+
+
+def user_posts(request):
+    posts = Post.objects.filter(status="published", author_id=request.user.id)
+    print(posts)
+
+    context = {
+        "posts": posts
+    }
+
+    return render(request, "blog/user_posts.html", context)

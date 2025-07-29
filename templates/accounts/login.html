@@ -1,25 +1,37 @@
 {% extends 'base.html' %}
 
-
+{% load static %}
 
 {% block content %}
-<h1>Welcome to the Blog's Login page</h1>
+<main class="login-container">
+    <div class="login-form-wrapper">
+        <h1 class="login-title">Welcome to the Blog's Login page</h1>
 
-{% include "includes/messages.html" %}
+        {% include "includes/messages.html" %}
 
-<form action="{% url 'accounts:login' %}" method="POST">
-    {% csrf_token %}
+        <form action="{% url 'accounts:login' %}" method="POST" class="login-form">
+            {% csrf_token %}
 
-    <div>
-        <label for="email">Enter your email</label>
-        <input type="text" name="email" id="email" enter your email required>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required class="form-control">
+            </div>
+            
+            {% comment %} PASSWORD RESET {% endcomment %}
+            <div class="form-options">
+                <a href="{% url 'accounts:password_reset' %}" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        {% comment %} SIGN UP FORM {% endcomment %}
+        <p class="signup-link">Don't have an account? <a href="{% url 'accounts:register' %}">Sign up here</a></p>
     </div>
-    <div>
-        <label for="password">Enter your email</label>
-        <input type="password" name="password" id="password" enter your password required>
-    </div>
-    <br>
-    <input type="submit" value="Login">
-</form>
-
+</main>
 {% endblock content %}

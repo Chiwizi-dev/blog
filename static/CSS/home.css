@@ -14,9 +14,9 @@
 .blog-posts-section {
     display: grid;
     /* This creates a responsive grid: 
-       - auto-fit: fill available space with as many columns as possible.
-       - minmax(300px, 1fr): columns will be at least 300px wide,
-                             or take up an equal share of remaining space. */
+        - auto-fit: fill available space with as many columns as possible.
+        - minmax(300px, 1fr): columns will be at least 300px wide,
+                               or take up an equal share of remaining space. */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px; /* Space between grid items */
     padding: 20px; /* Padding around the grid section */
@@ -60,32 +60,49 @@
     color: var(--primary-color); /* Change color on hover */
 }
 
-/* --- Post Meta Information (Author, Date) --- */
+/* --- Post Meta Information (Author, Date, Category) --- */
 .post-meta {
+    display: flex; /* Arrange author, date, and category side-by-side */
+    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+    align-items: center; /* Vertically aligns items in the middle */
+    gap: 10px; /* ADDED: This creates space between all direct child elements */
+
     font-size: 0.9em;
     color: var(--light-text-color);
     margin-bottom: 15px;
-    display: flex; /* Arrange author and date side-by-side */
-    align-items: center;
 }
 
 .post-meta .separator {
-    margin: 0 8px;
+    /* REMOVED: margin: 0 8px; -> 'gap' property on .post-meta handles spacing */
     color: var(--border-color);
+    font-weight: normal; /* Ensure separators aren't bold */
 }
 
-.post-author a {
-    font-weight: bold;
-    color: var(--primary-color); /* Make author link distinct */
+/* Ensure all links within post-meta are consistently styled */
+.post-meta a {
+    color: var(--primary-color); /* Use primary color for all links within meta */
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.post-author a:hover {
+.post-meta a:hover {
+    color: var(--secondary-color); /* Consistent hover color */
     text-decoration: underline;
+}
+
+/* Specific author link style (if you need it to override .post-meta a) */
+.post-author a {
+    font-weight: bold; /* Keep the bold style for the author */
+    /* Other styles like color/text-decoration are inherited from .post-meta a unless re-declared */
 }
 
 .post-date {
     /* No specific styles beyond parent .post-meta */
+}
+
+.post-meta .post-category {
+    font-weight: 600; /* Make it slightly bolder */
+    color: var(--primary-color); /* Use your primary color for emphasis */
 }
 
 /* --- Post Thumbnail Styling --- */
@@ -163,12 +180,6 @@
     .post-title {
         font-size: 1.6em;
     }
-}
-
-.post-meta .post-category {
-    font-weight: 600; /* Make it slightly bolder */
-    color: var(--primary-color); /* Use your primary color for emphasis */
-    /* If it becomes a link to a category page later, you can add text-decoration: none; etc. */
 }
 
 @media (max-width: 480px) {

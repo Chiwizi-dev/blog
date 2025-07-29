@@ -1,0 +1,231 @@
+/* In your_app_name/static/your_app_name/css/dashboard_styles.css */
+
+.dashboard-posts-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.dashboard-posts-container h1 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+.dashboard-post-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 30px; /* Increased margin-bottom for better separation */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08); /* Slightly stronger shadow for distinctness */
+    display: flex; /* Use flexbox for main content layout */
+    flex-direction: column; /* Default to column for small screens */
+    gap: 15px; /* Spacing between main sections of the card */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition for hover */
+}
+
+/* Add a hover effect for each post card */
+.dashboard-post-card:hover {
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12); /* Stronger shadow on hover */
+}
+
+/* Header Section */
+.dashboard-post-card .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Space between header and body */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.dashboard-post-card .post-title {
+    font-size: 1.6em;
+    margin: 0;
+    color: #007bff; /* Primary color for titles */
+    flex-grow: 1; /* Allow title to take up available space */
+    margin-right: 15px; /* Space before status */
+}
+
+.dashboard-post-card .post-status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px; /* Pill shape */
+    text-transform: uppercase;
+    font-size: 0.8em;
+    white-space: nowrap; /* Prevent status text from wrapping */
+}
+
+/* Status specific styling (adjust colors as needed) */
+.dashboard-post-card .status-published {
+    background-color: #d4edda;
+    color: #155724;
+}
+.dashboard-post-card .status-draft {
+    background-color: #fff3cd;
+    color: #856404;
+}
+.dashboard-post-card .status-pending {
+    background-color: #cfe2ff;
+    color: #052c65;
+}
+/* Add more status styles if you have other states (e.g., 'archived', 'rejected') */
+
+/* Body Section */
+.dashboard-post-card .post-body {
+    display: flex;
+    gap: 20px; /* Spacing between thumbnail and content */
+    flex-wrap: wrap; /* Allow thumbnail and content to wrap on small screens */
+    align-items: flex-start; /* Align items to the top */
+}
+
+.dashboard-post-card .post-thumbnail {
+    flex-shrink: 0; /* Prevent thumbnail from shrinking */
+    width: 100px; /* Smaller default width */
+    height: 75px; /* Smaller default height (maintaining 4:3 ratio) */
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.dashboard-post-card .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the area without distortion */
+    display: block; /* Remove extra space below image */
+}
+
+.dashboard-post-card .post-content {
+    flex-grow: 1; /* Allows content to fill remaining space */
+    min-width: 250px; /* Ensure content doesn't get too narrow */
+}
+
+.dashboard-post-card .post-summary {
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Styling for the meta information (published date, category, author etc.) */
+.dashboard-post-card .post-meta {
+    font-size: 0.85em; /* Slightly larger font size */
+    color: #6c757d; /* Darker gray for better readability */
+    margin-top: 15px;
+    border-top: 1px dashed #e9ecef; /* Subtle dashed separator above meta */
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Increased gap between individual meta items */
+}
+
+/* Styling for each individual meta item (e.g., "By mrchiwizi", "Category: Travel") */
+.dashboard-post-card .post-meta span {
+    background-color: #f0f2f5; /* Subtle background for distinction */
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap; /* Prevent individual items from wrapping their text */
+    /* You could add a subtle border here too: border: 1px solid #e2e4e7; */
+}
+
+
+/* Actions Section (View, Edit, Delete buttons) */
+.dashboard-post-card .post-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
+}
+
+/* General button styling */
+.dashboard-post-card .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dashboard-post-card .btn:hover {
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Specific button colors */
+.dashboard-post-card .btn-view {
+    background-color: #007bff;
+    color: #fff;
+}
+.dashboard-post-card .btn-view:hover {
+    background-color: #0056b3;
+}
+
+.dashboard-post-card .btn-edit {
+    background-color: #ffc107;
+    color: #343a40; /* Darker text for better contrast on yellow */
+}
+.dashboard-post-card .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.dashboard-post-card .btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+.dashboard-post-card .btn-delete:hover {
+    background-color: #bd2130;
+}
+
+.no-posts-message {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.1em;
+    margin-top: 50px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .dashboard-posts-container {
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .dashboard-post-card .post-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+    .dashboard-post-card .post-title {
+        margin-right: 0;
+        margin-bottom: 10px;
+        font-size: 1.4em;
+    }
+
+    .dashboard-post-card .post-body {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .dashboard-post-card .post-thumbnail {
+        width: 100%; /* Full width thumbnail on small screens */
+        height: 180px; /* Taller thumbnail on small screens */
+    }
+
+    .dashboard-post-card .post-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .dashboard-post-card .btn {
+        width: 100%;
+        margin-left: 0;
+    }
+}
