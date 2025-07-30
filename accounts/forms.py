@@ -1,6 +1,7 @@
 from django import forms
-from .models import Account, UserProfile
+from .models import UserProfile
 from datetime import date
+from django.contrib.auth import get_user_model
 
 
 class RegistrationForm(forms.ModelForm):
@@ -8,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
     confirm_password = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs={"placeholder":"Confirm Your Password"}))
 
     class Meta:
-        model = Account
+        model = get_user_model()
         fields = ("email", "user_name", "first_name", "last_name",)
 
     def __init__(self, *args, **kwargs):
@@ -34,6 +35,20 @@ class RegistrationForm(forms.ModelForm):
 
 
 
+class Edit_account_form(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ["first_name", "last_name", "about"]
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+            for field in self.fields:
+                self.fields[field].widget.attrs["class"] = "form-fields"
+    
+
+
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -50,3 +65,22 @@ class UserProfileForm(forms.ModelForm):
 
             for field in self.fields:
                 self.fields[field].widget.attrs["class"] = "form-fields"
+
+
+
+class Edit_userprofile_form(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["date_of_birth", "profile_picture", "address"]
+
+        widgets = {
+            'date_of_birth': forms.SelectDateWidget(
+                years=range(1900, date.today().year + 1)
+            ),
+        }
+
+        def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+
+                for field in self.fields:
+                    self.fields[field].widget.attrs["class"] = "form-fields"

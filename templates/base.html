@@ -15,6 +15,7 @@
      <link rel="stylesheet" href="{% static 'CSS/password_reset_email_form.css' %}">
      <link rel="stylesheet" href="{% static 'CSS/password_reset_form.css' %}">
      <link rel="stylesheet" href="{% static 'CSS/users_posts.css' %}">
+     <link rel="stylesheet" href="{% static 'CSS/edit_profile.css' %}">
 
      <script src="{% static 'JS/toggle_content.js' %}"></script>
      
@@ -53,16 +54,18 @@
         <div id="collapsibleSection" style="display: none;">
             <h3>Dashboard links</h3>
             <ul id="dashboardLinks">
-                <li><a href="{% url 'accounts:my_profile' %}">My Profile</a></li>
-                <li><a href="{% url 'accounts:change_password' %}">Change Password</a></li>
-                <li><a href="#">View Profile</a></li>
-                <li><a href="#">Settings</a></li>
+                <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'accounts:my_profile' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">My Profile</a></h4>
+                <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'accounts:change_password' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">Change Password</a></h4>
+                <h4><span style="color: #2ecc71;">&#10148; </span><a href="#" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">Settings</a></h4>
             </ul>
+            <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
         </div>
 
         <br>
         <h3>Categories</h3>
         <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:home' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;">All</a></h4>
+
+        <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
         <ul>
             {% for category in categories %}
                 <li>
@@ -70,6 +73,8 @@
                 </li>
             {% endfor %}
         </ul>
+
+        <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">
 
         <br>
         <h3>Quick Links</h3>

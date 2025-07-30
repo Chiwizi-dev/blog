@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib import messages
 
 from .models import Account, UserProfile
-from .forms import RegistrationForm, UserProfileForm
+from .forms import RegistrationForm, UserProfileForm, Edit_account_form, Edit_userprofile_form
 from django.contrib.auth.forms import SetPasswordForm 
 
 from django.contrib.auth.tokens import default_token_generator
@@ -132,6 +132,35 @@ def my_profile(request):
     context = {"user_pk": user_pk, "userprofile":userprofile, "user_obj": user_obj}
     return render(request, "accounts/dashboard.html", context)
 
+
+
+@login_required(login_url="/login/")
+def edit_profile(request):
+    user = request.user
+    user_profile = get_object_or_404(UserProfile, user=user)
+
+    if request.method == "POST":
+        account_edit = Edit_account_form(request.POST, instance=user)
+        profile_edit = Edit_userprofile_form(request.POST, request.FILES, instance=user_profile)
+
+        if account_edit.is_valid() and profile_edit.is_valid():
+            account_edit.save()
+            profile_edit.save()
+
+            messages.success(request, "Account updated successfully")
+            return redirect("accounts:my_profile")
+        
+        else:
+            messages.error(request, "Profile update was not successful, please address the errors highlighted")
+
+    else:
+        account_edit = Edit_account_form(instance=user)
+        profile_edit = Edit_userprofile_form(instance=user_profile)
+
+    context = {"account_edit_form": account_edit, "profile_edit_form": profile_edit, "user_profile": user_profile}
+
+    return render(request, "accounts/edit_profile.html", context)
+        
 
 
 def change_password(request):

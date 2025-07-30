@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="edit-profile-container">
+    <h1>Edit Your Profile</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="profile-edit-form">
+        {% csrf_token %}
+
+        {% if account_edit_form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in account_edit_form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if profile_edit_form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in profile_edit_form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-section profile-picture-section">
+            <h2>Profile Picture</h2>
+            {% if user_profile.profile_picture %}
+                <div class="current-profile-picture-wrapper">
+                    <img src="{{ user_profile.profile_picture.url }}" alt="Current Profile Picture" class="current-profile-picture">
+                    <p>Current Picture</p>
+                </div>
+            {% else %}
+                <p>No profile picture set yet.</p>
+            {% endif %}
+
+        <div class="form-field-group">
+            {{ profile_edit_form.profile_picture.label_tag }}
+            <input type="file" name="{{ profile_edit_form.profile_picture.html_name }}" id="{{ profile_edit_form.profile_picture.id_for_label }}" {% if profile_edit_form.profile_picture.value %} value="{{ profile_edit_form.profile_picture.value }}"{% endif %} class="form-fields">
+            
+            
+            {% if profile_edit_form.profile_picture.errors %}
+                <div class="field-error">{{ profile_edit_form.profile_picture.errors }}</div>
+            {% endif %}
+            {% if profile_edit_form.profile_picture.help_text %}
+                <small class="help-text">{{ profile_edit_form.profile_picture.help_text }}</small>
+            {% endif %}
+        </div>
+</div>
+        
+        </div>
+
+        <div class="form-section account-info-section">
+            <h2>Account Information</h2>
+            <div class="form-field-group">
+                {{ account_edit_form.first_name.label_tag }}
+                {{ account_edit_form.first_name }}
+                {% if account_edit_form.first_name.errors %}<div class="field-error">{{ account_edit_form.first_name.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field-group">
+                {{ account_edit_form.last_name.label_tag }}
+                {{ account_edit_form.last_name }}
+                {% if account_edit_form.last_name.errors %}<div class="field-error">{{ account_edit_form.last_name.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field-group">
+                {{ account_edit_form.email.label_tag }}
+                {{ account_edit_form.email }}
+                {% if account_edit_form.email.errors %}<div class="field-error">{{ account_edit_form.email.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field-group">
+                {{ account_edit_form.about.label_tag }}
+                {{ account_edit_form.about }}
+                {% if account_edit_form.about.errors %}<div class="field-error">{{ account_edit_form.about.errors }}</div>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-section personal-details-section">
+            <h2>Personal Details</h2>
+            <div class="form-field-group">
+                {{ profile_edit_form.date_of_birth.label_tag }}
+                {{ profile_edit_form.date_of_birth }}
+                {% if profile_edit_form.date_of_birth.errors %}<div class="field-error">{{ profile_edit_form.date_of_birth.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field-group">
+                {{ profile_edit_form.address.label_tag }}
+                {{ profile_edit_form.address }}
+                {% if profile_edit_form.address.errors %}<div class="field-error">{{ profile_edit_form.address.errors }}</div>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'accounts:my_profile' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}
