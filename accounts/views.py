@@ -88,7 +88,7 @@ def activate(request, uidb64, token):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("home")
+        return redirect("blog:home")
     
     if request.method == "POST":
         email = request.POST.get("email")
@@ -112,29 +112,27 @@ def confirm_logout(request):
     return render(request, "accounts/confirm_logout.html")
 
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 def logout_view(request):
     logout(request)
     return redirect("blog:home")
 
 
-# @login_required(login_url="/login/")
+# @login_required(login_url="/accounts/login/")
 def my_profile(request):
     if not request.user.is_authenticated:
         return redirect("blog:home")
     user_obj = request.user
     user_pk = request.user.pk
 
-
     userprofile = get_object_or_404(UserProfile, user_id=user_pk)
-
 
     context = {"user_pk": user_pk, "userprofile":userprofile, "user_obj": user_obj}
     return render(request, "accounts/dashboard.html", context)
 
 
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 def edit_profile(request):
     user = request.user
     user_profile = get_object_or_404(UserProfile, user=user)
@@ -163,6 +161,7 @@ def edit_profile(request):
         
 
 
+@login_required(login_url="/accounts/login/")
 def change_password(request):
     if request.method == "POST":
         current_password = request.POST.get("current_password", None)
@@ -188,41 +187,47 @@ def change_password(request):
 
 
 def forget_password(request):
-    if request.method == "POST":
-        email = request.POST.get("email", None)
-        if Account.objects.filter(email=email, is_active=True).exists():
-            user = get_object_or_404(Account, email__exact=email, is_active=True)
-
-            site_name = get_current_site(request)
-            to_email = user.email
-            email_subject = "Reset your password"
-            uid = urlsafe_base64_encode(force_bytes(user.id))
-            token = default_token_generator.make_token(user)
-
-            email_body = render_to_string("accounts/reset_email/password_reset_email.html", {
-                "domain": site_name,
-                "user": user,
-                "uidb64": uid,
-                "token": token
-            })
-            send_email = EmailMessage(
-                subject=email_subject,
-                body=email_body,
-                to=[to_email,]
-            )
-            send_email.send()
-
-            messages.success(request, "Password Reset Email was sent to the email you entered, please check your inbox to reset your password.")
-            return redirect("blog:home")
-        else:
-            messages.error(request, "it appears you entered and invalid / inactive email")
-            return redirect("blog:home")
+    if request.user.is_authenticated:
+        return redirect("blog:home")
     else:
-        return render(request, "accounts/password_reset_email_form.html")
-    
+        if request.method == "POST":
+            email = request.POST.get("email", None)
+            if Account.objects.filter(email=email, is_active=True).exists():
+                user = get_object_or_404(Account, email__exact=email, is_active=True)
+
+                site_name = get_current_site(request)
+                to_email = user.email
+                email_subject = "Reset your password"
+                uid = urlsafe_base64_encode(force_bytes(user.id))
+                token = default_token_generator.make_token(user)
+
+                email_body = render_to_string("accounts/reset_email/password_reset_email.html", {
+                    "domain": site_name,
+                    "user": user,
+                    "uidb64": uid,
+                    "token": token
+                })
+                send_email = EmailMessage(
+                    subject=email_subject,
+                    body=email_body,
+                    to=[to_email,]
+                )
+                send_email.send()
+
+                messages.success(request, "Password Reset Email was sent to the email you entered, please check your inbox to reset your password.")
+                return redirect("blog:home")
+            else:
+                messages.error(request, "it appears you entered and invalid / inactive email")
+                return redirect("blog:home")
+        else:
+            return render(request, "accounts/password_reset_email_form.html")
+        
 
 
 def password_reset_confirm(request, uidb64, token):
+    if request.user.is_authenticated:
+        return redirect("base:home")
+    
     uid = None
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
