@@ -1,0 +1,236 @@
+/* --- General Layout and Container --- */
+.edit-post-container {
+    max-width: 700px; /* Max width for the form container */
+    margin: 40px auto; /* Center the container with some top/bottom margin */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
+}
+
+.edit-post-container h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: 600;
+    border-bottom: 2px solid #eee; /* Underline effect */
+    padding-bottom: 15px;
+}
+
+/* --- Form Groups (Labels + Inputs) --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block; /* Make labels take full width */
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* --- Input Fields (targeted by the 'edit_form' class from forms.py) --- */
+/* This rule applies to input, textarea, select elements that get the "edit_form" class */
+/* Assuming your forms.py adds class="edit_form" to most fields */
+.edit_form {
+    width: 100%; /* Full width within its container */
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #333;
+    background-color: #f9f9f9; /* Light background for fields */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.edit_form:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue glow on focus */
+    outline: none; /* Remove default outline */
+    background-color: #fff;
+}
+
+/* Specific adjustments for file inputs (which are NOT targeted by .edit_form by default,
+   as field.file_field doesn't automatically add the class unless configured in forms.py) */
+input[type="file"] {
+    width: 100%; /* Make file input also take full width */
+    padding: 8px; /* Slightly less padding for file input */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #e9ecef; /* Different background for file input */
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #333;
+}
+
+/* Checkbox specific styling (e.g., for the 'status' field) */
+.edit_form[type="checkbox"] {
+    width: auto; /* Checkboxes don't need full width */
+    margin-right: 8px;
+    vertical-align: middle; /* Align with label text */
+}
+/* Ensure label for checkbox aligns properly if it's right next to it */
+.form-group label[for$="status"] { /* Targeting the label for 'status' field using attribute selector */
+    display: inline-block; /* Keep label next to checkbox */
+    margin-bottom: 0;
+    margin-left: 5px; /* Adjust spacing */
+}
+
+
+/* --- Help Text and Error Messages --- */
+.form-text {
+    font-size: 0.8em;
+    color: #6c757d; /* Muted text color for help text */
+    margin-top: 5px;
+}
+
+ul.errorlist {
+    color: #dc3545; /* Red color for error messages */
+    font-size: 0.85em;
+    margin-top: 5px;
+    padding-left: 0; /* Remove default ul padding */
+    list-style: none; /* Remove bullet points */
+}
+ul.errorlist.non-field-errors {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+
+/* --- Custom Thumbnail Preview Styling --- */
+.current-thumbnail-preview {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+    text-align: center; /* Center the image and link */
+}
+
+.thumbnail-preview-img {
+    max-width: 150px; /* Control the size of the preview image. Adjust as needed! */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensures it takes up its own line */
+    margin: 0 auto 10px auto; /* Center image horizontally with space below */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.thumbnail-link {
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+    word-break: break-all; /* Helps long file names wrap */
+    display: block; /* Make the link take full width */
+}
+.thumbnail-link:hover {
+    text-decoration: underline;
+}
+
+/* Styling for the clear checkbox and its label */
+.thumbnail-clear-option {
+    display: flex; /* Use flexbox to align checkbox and label */
+    align-items: center; /* Vertically center them */
+    margin-top: 10px; /* Space above the clear option */
+}
+
+.thumbnail-clear-option input[type="checkbox"] {
+    margin-right: 8px; /* Space between checkbox and label */
+    width: auto; /* Override general input[type="file"] width */
+}
+
+.thumbnail-clear-label {
+    font-weight: normal; /* Labels for checkboxes are often lighter */
+    color: #333;
+    margin-bottom: 0; /* Remove default margin from p and label */
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+
+/* --- Buttons --- */
+.button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none; /* Remove underline for links acting as buttons */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    margin-right: 15px; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+    -webkit-appearance: none; /* Reset some browser defaults for consistency */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.button-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+}
+
+.button-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: 1px solid #6c757d;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+
+/* --- Django Messages Styling --- */
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+ul.messages li {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+ul.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+ul.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+ul.messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+ul.messages li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}

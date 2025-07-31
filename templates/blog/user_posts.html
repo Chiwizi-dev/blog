@@ -36,34 +36,14 @@
 
                     <div class="post-actions">
                         <a href="{{ post.get_absolute_url }}" class="btn btn-view">View</a>
-                        <a href="#" class="btn btn-edit">Edit</a>
+                        <a href="{{ post.get_post_edit_url }}" class="btn btn-edit">Edit</a>
                         <a href="#" class="btn btn-delete">Delete</a>
                     </div>
                 </article>
             {% endfor %}
         {% else %}
             <p class="no-posts-message">You haven't created any posts yet.</p>
-            <a href="#" class="btn btn-primary">Create Your First Post</a>
+            <a href="{% url 'blog:create' %}" class="btn btn-primary">Create Your First Post</a>
         {% endif %}
     </div>
 {% endblock content %}
-
-
-
-{% comment %} {% extends 'base.html' %}
-{% load static %}
-
-
-
-{% block content %}
-    {% for post in posts %}
-        {{ post.title }}
-        {{ post.author }}
-        {{ post.summary }}
-        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
-        {{ post.publish_date }}
-        {{ post.updated_at }}
-        {{ post.status }}
-        {{ post.category }}
-    {% endfor %}
-{% endblock content %} {% endcomment %}

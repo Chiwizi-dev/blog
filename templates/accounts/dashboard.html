@@ -4,7 +4,13 @@
 
 
 {% block content %}
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 <div class="user-profile-card">
     <div class="profile-header">
         <img src="{{ userprofile.profile_picture.url }}" alt="{{ userprofile.user.user_name }}'s Profile Picture" class="profile-picture">

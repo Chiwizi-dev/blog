@@ -4,6 +4,12 @@
 
 {% include "../includes/messages.html" %}
 
+{% if user.is_authenticated %}
+    <div class="create-button-wrapper">
+        <a href="{% url 'blog:create' %}" class="button button-primary create-new-post-btn">Create New Post</a>
+    </div>
+{% endif %}
+
 <section class="blog-posts-section">
     {% for post in posts %}
     <article class="post-card">
@@ -16,7 +22,8 @@
             <span class="separator">|</span>
             <time class="post-date" datetime="{{ post.publish_date|date:'Y-m-d' }}">{{ post.publish_date|date:"F d, Y" }}</time>
             <span class="separator">|</span>
-            <span class="post-category">Category: {{ post.category }}</span>
+            
+            <span class="post-category">Category: <a href="{% url 'blog:categories' post.category.slug %}">{{ post.category.name | capfirst }}</a></span>
         </div>
         
         {% if post.thumbnail %}

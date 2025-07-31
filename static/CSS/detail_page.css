@@ -143,3 +143,54 @@
     background-color: var(--dark-primary-color, #0056b3);
     transform: translateY(-2px); /* Slight lift on hover */
 }
+
+/* Add these new rules to your blog/static/css/styles.css */
+
+/* Edit Button Styling */
+.button-edit {
+    background-color: #3498db; /* A standard blue */
+    color: white;
+}
+
+.button-edit:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Delete Button Styling */
+.button-delete {
+    background-color: #e74c3c; /* A distinct red */
+    color: white;
+}
+
+.button-delete:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Spacing between buttons in this action group */
+.post-detail-actions .button {
+    margin-right: 10px; /* Space to the right of each button */
+}
+
+/* Remove margin for the last button to prevent extra space */
+.post-detail-actions .back-to-blog-btn {
+    margin-right: 0;
+}
+
+.button {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+.button-secondary:hover {
+    background-color: #7f8c8d;
+}

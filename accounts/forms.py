@@ -74,13 +74,11 @@ class Edit_userprofile_form(forms.ModelForm):
         fields = ["date_of_birth", "profile_picture", "address"]
 
         widgets = {
-            'date_of_birth': forms.SelectDateWidget(
-                years=range(1900, date.today().year + 1)
-            ),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
 
-        def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-                for field in self.fields:
-                    self.fields[field].widget.attrs["class"] = "form-fields"
+        for field in self.fields:
+         self.fields[field].widget.attrs["class"] = "form-fields"

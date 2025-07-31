@@ -9,8 +9,9 @@
         <div class="post-detail-meta">
             <span class="post-detail-author">By {{ post.author }}</span>
             <span class="separator">|</span>
-            <span class="post-detail-category">Category: {{ post.category }}</span>
+            <span class="post-detail-category">Category: <a href="{% url 'blog:categories' post.category.slug %}"style="color: #007bff; text-decoration: none; font-weight: bold;">{{ post.category.name | capfirst }}</a></span>
             <span class="separator">|</span>
+            
             {% comment %} Ensure publish_date is formatted nicely for humans and machines {% endcomment %}
             <time class="post-detail-date" datetime="{{ post.publish_date|date:'Y-m-d' }}">{{ post.publish_date|date:"F d, Y" }}</time>
         </div>
@@ -26,7 +27,11 @@
         </div>
 
         <div class="post-detail-actions">
-            <a href="{% url 'blog:home' %}" class="back-to-blog-btn">Back to Blog</a>
+            {% if request.user.is_authenticated and request.user == post.author %}
+                <a href="{{ post.get_post_edit_url }}" class="button button-edit">Edit</a>
+                <a href="" class="button button-delete">Delete</a>
+            {% endif %}
+            <a href="{% url 'blog:home' %}" class="button button-secondary back-to-blog-btn">Back to Blog</a>
         </div>
     </article>
 </main>

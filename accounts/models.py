@@ -63,6 +63,9 @@ class Account(AbstractBaseUser, PermissionsMixin):
     
     def post_count(self):
         return self.blog_posts.filter(status="published").count()
+    
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class UserProfile(models.Model):

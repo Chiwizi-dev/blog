@@ -24,6 +24,16 @@
     box-sizing: border-box; 
 }
 
+.create-button-wrapper {
+    text-align: center; /* Center the button horizontally */
+    margin-top: 20px;
+    margin-bottom: 40px; /* Space between the button and the blog posts */
+    padding: 15px; /* Add some padding around it */
+    background-color: #e8f8f5; /* A light background to make it stand out */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow */
+}
+
 /* --- Individual Post Card Styling --- */
 .post-card {
     background-color: var(--card-background);

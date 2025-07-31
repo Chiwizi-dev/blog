@@ -21,7 +21,8 @@ class AboutPage(models.Model):
 
     def __str__(self):
         return self.title
-
+    
+    
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -75,9 +76,6 @@ class Post(models.Model):
     )
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, related_name='posts'
     )
-    # If you want tagging, consider using django-taggit:
-    # from taggit.managers import TaggableManager
-    # tags = TaggableManager(blank=True) # pip install django-taggit, add 'taggit' to INSTALLED_APPS
 
     objects = PostManager()
 
@@ -93,8 +91,36 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:post_detail',
                        args=[self.publish_date.year, self.publish_date.strftime('%m'), self.publish_date.strftime('%d'), self.slug])
+    
+    def get_post_edit_url(self):
+        return reverse('blog:post_edit',
+                       args=[self.publish_date.year, self.publish_date.strftime('%m'), self.publish_date.strftime('%d'), self.slug])
 
     def save(self, *args, **kwargs):
         if not self.slug or (self.pk and not Post.objects.filter(pk=self.pk, title=self.title).exists()):
              self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey('Post', on_delete=models.CASCADE,related_name='comments', help_text="The blog post this comment belongs to.")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,related_name='user_comments', null=True, blank=True)
+    body = models.TextField()
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['created_at']),
+        ]
+
+    def __str__(self):
+        return f'Comment by {self.user.user_name} on "{self.post.title}"'
+
+    def get_commentator_name(self):
+        if self.user:
+            return self.user.user_name
+        return 'Anonymous'
