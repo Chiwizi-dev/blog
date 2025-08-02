@@ -214,3 +214,96 @@
         font-size: 0.8em;
     }
 }
+
+/* --- Pagination Section Styling --- */
+.pagination {
+    display: flex; /* Use flexbox to center and align pagination elements */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Vertically align items */
+    margin: 40px 0; /* Space above and below pagination block */
+    padding: 15px;
+    background-color: var(--card-background); /* Use card background for consistency */
+    border-top: 1px solid var(--border-color); /* Subtle top border */
+    /* border-radius: 8px; /* You could add border-radius if you want the whole block rounded */
+    /* box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Subtle shadow for the block */
+}
+
+.pagination .step-links {
+    display: flex; /* Flexbox for the links themselves */
+    gap: 10px; /* Space between pagination items */
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center; /* Center items if they wrap */
+}
+
+.pagination a,
+.pagination .current {
+    display: inline-flex; /* Use flex for consistent centering if text/icon size varies */
+    align-items: center;
+    justify-content: center;
+    min-width: 40px; /* Minimum width for square/rounded buttons */
+    height: 40px; /* Fixed height */
+    padding: 0 12px; /* Horizontal padding, vertical is handled by height */
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* Slightly rounded corners for pagination items */
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+/* Styling for regular pagination links (Next, Previous, First, Last) */
+.pagination a {
+    color: var(--primary-color); /* Use primary color for links */
+    background-color: #f8f8f8; /* Light background for default links */
+}
+
+.pagination a:hover {
+    background-color: var(--primary-color); /* Background color on hover */
+    color: white; /* White text on hover */
+    border-color: var(--primary-color); /* Border matches background on hover */
+    transform: translateY(-2px); /* Slight lift on hover, consistent with post cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+/* Styling for the current page number */
+.pagination .current {
+    background-color: var(--primary-color); /* Primary color for the active page */
+    color: white; /* White text for the active page */
+    border-color: var(--primary-color);
+    font-weight: bold; /* Bold text for the current page */
+    cursor: default; /* Indicate it's not clickable */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for current page */
+}
+
+/* Responsive adjustments for pagination */
+@media (max-width: 768px) {
+    .pagination {
+        margin: 30px 0;
+        padding: 10px;
+    }
+
+    .pagination a,
+    .pagination .current {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 10px;
+        font-size: 0.9em;
+    }
+
+    .pagination .step-links {
+        gap: 8px; /* Slightly less gap on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        margin: 20px 0;
+        flex-direction: column; /* Stack pagination items vertically */
+        gap: 15px; /* Add gap between stacked elements */
+    }
+    .pagination .step-links {
+        flex-wrap: nowrap; /* Prevent wrapping for smaller items */
+        overflow-x: auto; /* Allow horizontal scroll if too many items (for ellipsis) */
+        padding-bottom: 5px; /* Space for scrollbar */
+    }
+}

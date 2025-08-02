@@ -29,7 +29,10 @@
         <div class="post-detail-actions">
             {% if request.user.is_authenticated and request.user == post.author %}
                 <a href="{{ post.get_post_edit_url }}" class="button button-edit">Edit</a>
-                <a href="" class="button button-delete">Delete</a>
+                <form action="{% url 'blog:post_delete' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="button button-delete" onclick="return confirm('Are you sure you want to delete the post titled &quot;{{ post.title }}&quot;? This action cannot be undone.');">Delete</button>
+                </form>
             {% endif %}
             <a href="{% url 'blog:home' %}" class="button button-secondary back-to-blog-btn">Back to Blog</a>
         </div>

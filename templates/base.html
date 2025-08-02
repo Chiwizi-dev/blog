@@ -98,7 +98,7 @@
         <h3>Quick Stats</h3>
         <p><strong>Total Posts:</strong> {{ posts_count }}</p>
         {% if user.is_authenticated %}
-            <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:user_posts' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;"><strong>Your Posts:</strong> {{ user.post_count }}</a></h4>
+            <h4><span style="color: #2ecc71;">&#10148; </span><a href="{% url 'blog:user_posts' %}" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;"><strong>Your Posts:</strong> {{ user_posts }}</a></h4>
         {% endif %}
 
         <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 15px 0;">

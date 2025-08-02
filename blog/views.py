@@ -7,6 +7,8 @@ from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 # Create your views here.
 
@@ -15,14 +17,37 @@ def home(request, category=None):
     posts = None
     if category is not None:
         posts = Post.objects.filter(category__slug=category, status="published")
+
+        paginator = Paginator(posts, 2)
+        page_number = request.GET.get("page")
+
+        try: 
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
+
     else:
         posts = Post.objects.published()
+
+        paginator = Paginator(posts, 2)
+        page_number = request.GET.get("page")
+        
+        try: 
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
     
-    
-    # posts_count = posts.count()
+    user_posts = None
+    if request.user.is_authenticated:
+        user_posts = Post.objects.filter(author=request.user).count()
 
     # "posts_count": posts_count
-    context = {"posts": posts, "user_posts": user_posts}
+    context = {"page_obj": page_obj, "user_posts": user_posts}
     return render(request, "blog/home.html", context)
 
 
@@ -51,7 +76,7 @@ def about_page(request):
 
 
 def user_posts(request):
-    posts = Post.objects.filter(status="published", author_id=request.user.id)
+    posts = Post.objects.filter(author_id=request.user.id)
     print(posts)
 
     context = {
@@ -116,3 +141,26 @@ def post_edit(request, yr, mt, dt, slug):
     
     context = context = {"form": form, "post": obj}
     return render(request, "blog/post_edit.html", context)
+
+
+
+@login_required(login_url="/accounts/login/")
+def post_delete(request, yr, mt, dt, slug):
+    obj = get_object_or_404(
+        Post,
+        publish_date__year=yr,
+        publish_date__month=mt,
+        publish_date__day=dt,
+        slug=slug
+    )
+    if request.method == "POST":
+        if obj.author != request.user:
+            messages.error(request, "You don't have permission to edit this post!")
+            return redirect("blog:home")
+        
+        obj.delete()
+        messages.success(request, f"Post '{obj.title}' has been successfully deleted.")
+        return redirect("blog:user_posts")
+    else:
+        messages.info(request, "Please use the delete button to confirm post deletion.")
+        return redirect('blog:post_detail', yr=yr, mt=mt, dt=dt, slug=slug)
