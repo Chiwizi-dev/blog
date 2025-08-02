@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -41,6 +43,37 @@ def home(request, category=None):
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
+    
+    user_posts = None
+    if request.user.is_authenticated:
+        user_posts = Post.objects.filter(author=request.user).count()
+
+    # "posts_count": posts_count
+    context = {"page_obj": page_obj, "user_posts": user_posts}
+    return render(request, "blog/home.html", context)
+
+
+
+def search(request):
+    query = request.GET.get("q", None)
+
+    search_obj = Post.objects.published()
+
+    posts = search_obj.filter(
+        Q(title__icontains = query) |
+        Q(summary__icontains = query) |
+        Q(content__icontains = query)
+    ).distinct()
+
+    paginator = Paginator(posts, 2)
+    page_number = request.GET.get("page")
+    
+    try: 
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     
     user_posts = None
     if request.user.is_authenticated:
@@ -164,3 +197,4 @@ def post_delete(request, yr, mt, dt, slug):
     else:
         messages.info(request, "Please use the delete button to confirm post deletion.")
         return redirect('blog:post_detail', yr=yr, mt=mt, dt=dt, slug=slug)
+    

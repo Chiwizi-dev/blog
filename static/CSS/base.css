@@ -26,50 +26,129 @@ header, aside, main, footer {
     grid-area: header; 
     background-color: #333;
     color: #fff;
-    display: flex; 
+    /* This needs to be a flex container to center the navbar within it */
+    display: flex;
+    justify-content: center; /* Centers the .navbar horizontally */
     align-items: center;
     padding: 15px 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* --- Logo (1 part of the 1:7 ratio in header) --- */
-.page-header .logo {
-    flex: 1; 
-    display: flex;
+/* --- Navbar (The main container for logo, nav links, search, and user info) --- */
+.navbar {
+    /* Remove the 'flex: 7;' as we're managing flex items directly inside */
+    display: flex; /* Makes the navbar a flex container */
+    align-items: center; /* Vertically aligns all items */
+    width: 90%; /* Adjust as needed for overall navbar content width */
+    max-width: 1200px; /* Max width for the content inside navbar */
+    padding: 0 20px; /* Horizontal padding for spacing from screen edges */
+    /* Crucially, remove 'justify-content: space-between;' from here.
+       We'll use auto-margins to control spacing for precise positioning. */
+}
+
+/* --- Logo (1 part of the 1:7 ratio in header - NOW DIRECTLY IN NAVBAR) --- */
+/* We'll use a new class 'logo-link' in base.html for the anchor tag wrapping the logo */
+.logo-link { /* Using .logo-link instead of .page-header .logo for direct targeting */
+    flex-shrink: 0; /* Prevent logo from shrinking */
+    margin-right: 25px; /* Space between logo and left nav links */
+    display: flex; /* Keeps the image centered if it's smaller than its container */
     align-items: center;
     justify-content: flex-start;
-    min-width: 50px;
-    font-size: 1.6em;
+    font-size: 1.6em; /* Ensure text styles are maintained if logo is text */
     font-weight: bold;
     color: #90EE90;
     text-decoration: none;
 }
 
 /* Styling for the image within the logo link */
-.page-header .logo img {
+.logo-link img { /* Target the image inside the logo link */
     width: 70px; 
     height: 40px;
     object-fit: contain;
     display: block; 
 }
 
-.navbar {
-    flex: 7;
-    display: flex; 
-    justify-content: space-between;
-    align-items: center; 
-}
-
-/* Styling for individual ul lists within nav */
-.page-header nav ul {
+/* Styling for Left Nav Links */
+.navbar ul.nav-left-links { /* New class for the first ul (Home, About, Dashboard) */
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     gap: 25px;
+    flex-shrink: 0; /* Prevent these links from shrinking */
 }
 
-/* Styling for individual links */
+/* Styling for the Search Form (NOW IN THE MIDDLE) */
+.header-search-form { /* This is the div holding your search form */
+    /* These auto-margins are KEY to centering the search form */
+    margin-left: auto;  /* Pushes this element away from the left-aligned items */
+    margin-right: auto; /* Pushes this element away from the right-aligned items */
+    
+    max-width: 450px; /* Control the maximum width of the search bar */
+    flex-grow: 1; /* Allows it to take up available space in the middle */
+    flex-shrink: 1; /* Allow it to shrink if space is tight */
+}
+
+.search-form {
+    display: flex;
+    gap: 8px; /* Space between input and button */
+    width: 100%; /* Ensures the form takes the full width of its parent */
+}
+
+.search-input {
+    flex-grow: 1; /* Input takes available space */
+    padding: 8px 12px; /* Adjusted padding for a more compact header look */
+    border: 1px solid #ccc; /* Using explicit color instead of var if it's not defined globally */
+    border-radius: 4px; /* Consistent with other form fields */
+    font-size: 0.9em;
+    outline: none;
+    background-color: #fff; /* Ensure it has a white background for visibility */
+    color: #333; /* Dark text color */
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff; /* Consistent with your form fields focus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.search-button {
+    padding: 8px 15px; /* Adjusted padding for compact button */
+    font-size: 0.9em;
+    white-space: nowrap; /* Prevent button text from wrapping */
+    background-color: #007bff; /* Use your primary button color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+
+/* Styling for Right-aligned User Info / Login (NOW AT THE FAR RIGHT) */
+.navbar ul.nav-right-info { /* New class for the second ul (Welcome, Login/Logout) */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px; /* Maintain gap between items */
+    white-space: nowrap; /* Prevent text from wrapping */
+    flex-shrink: 0; /* Prevent these links from shrinking */
+    
+    /* This is KEY to pushing it to the absolute far right */
+    margin-left: auto; /* This consumes all remaining space to its left, pushing it right */
+}
+
+
+/* Styling for individual ul lists within nav (GENERAL STYLES - apply to all ul in nav) */
+/* This rule needs to be adjusted or placed before specific ul.nav-left-links/ul.nav-right-info */
+/* We'll use the specific classes now, so this general rule can be less impactful or removed. */
+/* Keeping it here for now, but be aware of potential conflicts if not careful. */
 .page-header nav ul li a {
     color: #fff;
     text-decoration: none;
@@ -80,6 +159,7 @@ header, aside, main, footer {
 .page-header nav ul li a:hover {
     color: #90EE90;
 }
+
 
 /* --- 2a. Left Sidebar --- */
 .left-sidebar {
@@ -231,9 +311,6 @@ textarea.form-fields {
     transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
-
-
-
 /* ABOUT PAGE */
 .about-container {
     margin-top: 40px;
@@ -266,37 +343,72 @@ textarea.form-fields {
         align-items: flex-start; /* Align everything to the left */
         padding: 10px 15px;
     }
-    .page-header .logo {
-        flex: none; /* Remove flex-grow on small screens to let it take natural width */
+
+    /* Important: Reset flex properties for mobile view */
+    .page-header .logo { /* Your old logo class outside of navbar */
+        flex: none; /* Remove flex-grow on small screens */
         margin-bottom: 10px; /* Add space below logo */
+        margin-right: 0; /* Clear previous margin */
     }
+    .logo-link { /* The new logo class inside navbar */
+        width: 100%; /* Take full width */
+        text-align: center;
+        margin-bottom: 10px;
+        margin-right: 0; /* Remove right margin */
+        justify-content: center; /* Center the logo image/text */
+    }
+
+
     .navbar { /* Target the <nav class="navbar"> */
         flex: none; /* Remove flex-grow on small screens */
-        flex-direction: column; /* Stack the two <ul>s vertically */
+        flex-direction: column; /* Stack the elements vertically */
         align-items: flex-start; /* Align nav items to the left */
         width: 100%; /* Make nav take full width */
-        gap: 0; /* Remove gap between stacked <ul>s */
+        gap: 0; /* Remove gap between stacked elements */
+        padding: 0; /* Remove horizontal padding */
     }
-    .page-header nav ul { /* Also target specific <ul>s inside the nav for stacking */
+    /* Specific nav ul styling for mobile */
+    .navbar ul.nav-left-links,
+    .navbar ul.nav-right-info {
         flex-direction: column; /* Stack list items vertically */
         width: 100%;
         gap: 0; /* Remove gap between stacked list items */
         border-top: 1px solid rgba(255,255,255,0.1); /* Separator for clarity */
         padding-top: 5px;
         margin-top: 5px;
+        margin-left: 0; /* Remove auto-margins on mobile */
+        margin-right: 0; /* Remove auto-margins on mobile */
     }
-    .page-header nav ul:first-child {
-        border-top: none; /* No top border for the very first ul */
+
+    .navbar ul.nav-left-links:first-child { /* Fix for first ul in nav */
+        border-top: none;
         padding-top: 0;
         margin-top: 0;
     }
-    .page-header nav ul li {
+    .page-header nav ul li { /* General list item styling */
         width: 100%;
     }
-    .page-header nav ul li a {
+    .page-header nav ul li a { /* General link styling */
         padding: 10px 0;
         display: block;
     }
+
+    /* Mobile styling for the search form */
+    .header-search-form {
+        order: 3; /* Push search form to bottom when wrapped */
+        width: 100%;
+        margin: 10px 0; /* Adjust vertical margin, remove horizontal auto-margins */
+        max-width: none; /* Allow it to take full width */
+    }
+    .search-form {
+        flex-direction: column; /* Stack input and button vertically */
+    }
+    .search-input, .search-button {
+        width: 100%; /* Make them full width when stacked */
+        box-sizing: border-box; /* Include padding/border in width */
+    }
+
+
     .left-sidebar, .right-aside {
         width: auto;
         border-right: none; /* Remove vertical borders when stacked */
@@ -307,7 +419,6 @@ textarea.form-fields {
         border-bottom: 1px solid #c0e0c0; /* Add bottom border below main content too */
     }
 }
-
 
 
 /* DASHBOARD */

@@ -3,41 +3,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{% block title %}My Blog{% endblock title %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/detail_page.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/login_page.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/register.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/change_password.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/password_reset_email_form.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/password_reset_form.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/users_posts.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/edit_profile.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/create.css' %}">
-     <link rel="stylesheet" href="{% static 'CSS/post_edit.css' %}">
+    {# Removed duplicate <title>Document</title> #}
+    
+    <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/detail_page.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/login_page.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/register.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/change_password.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/password_reset_email_form.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/password_reset_form.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/users_posts.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/edit_profile.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/create.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/post_edit.css' %}">
 
-
-     <script src="{% static 'JS/toggle_content.js' %}"></script>
-     
+    <script src="{% static 'JS/toggle_content.js' %}"></script>
 </head>
 <body>
     <header class="page-header">
-        <a href="{% url 'blog:home' %}" class="logo"><img src="{% static 'Images/logo.png' %}" alt="Logo" style="width: 70px; height: 40px;"></a>
+        {# Logo moved INSIDE the navbar to be a direct flex item #}
         <nav class="navbar">
-            <ul>
+            <a href="{% url 'blog:home' %}" class="logo-link">
+                <img src="{% static 'Images/logo.png' %}" alt="Logo" style="width: 70px; height: 40px;">
+            </a>
+
+            {# Left navigation links #}
+            <ul class="nav-left-links">
                 <li><a href="{% url 'blog:home' %}">Home</a></li>
                 <li><a href="{% url 'blog:about_page' %}">About</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="#" id="toggleSectionButton" >Dashboard</a></li>
                 {% endif %}
             </ul>
-            <ul>
+
+            {# Search Form (will be centered) #}
+            <div class="header-search-form"> 
+                <form action="{% url 'blog:search' %}" method="GET" class="search-form">
+                    <input type="search" name="q" placeholder="Search blog posts..." class="search-input" value="{{ query|default_if_none:'' }}">
+                    <button type="submit" class="button button-primary search-button">Search</button>
+                </form>
+            </div>
+
+            {# User details / Login/Logout (will be at the far right) #}
+            <ul class="nav-right-info">
                 <li>
-                     {% if user.is_authenticated %}
+                    {% if user.is_authenticated %}
                         <span>Welcome, <strong>{{ user.user_name |capfirst }}</strong></span>
                     {% else %}
                         <span>Welcome, User</span>
@@ -84,14 +98,13 @@
         <h3>Quick Links</h3>
         <ul>
             <li><h4><span style="color: #2ecc71;">&#10148; </span><a href="" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;display: inline;" >Settings</a></h4></li>
-
             <li><h4><span style="color: #2ecc71;">&#10148; </span><a href="" style="color: #55a2f4; text-decoration: none; font-weight: bold; font-size: 1.1em;display: inline;" >T &amp; C</a></h4></li>
         </ul>
     </aside>
 
     <main class="main-content">
-       {% block content %}
-       {% endblock content %}
+        {% block content %}
+        {% endblock content %}
     </main>
 
     <aside class="right-aside">
@@ -124,11 +137,9 @@
             </ul>
             {% else %}
                 <div style="margin-bottom: 20px;">
-                <a href="#"><img src="../../static/Images/blog-advert.jpg" alt="advert" width="170px"></a></div>
-                <div><a href="#"><img src="../../static/Images/blog-advert2.jpg" alt="advert" width="170px"></a></div>
-                
+                <a href="#"><img src="{% static 'Images/blog-advert.jpg' %}" alt="advert" width="170px"></a></div> 
+                <div><a href="#"><img src="{% static 'Images/blog-advert2.jpg' %}" alt="advert" width="170px"></a></div>
         {% endif %}
-       
     </aside>
 
     <footer class="footer">
@@ -141,9 +152,7 @@
     </footer>
 
     <script>
-        // JavaScript to automatically update the copyright year in the footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
-
 </body>
 </html>
